@@ -17,14 +17,19 @@ protoc:
 
 .PHONY: lint
 lint:
-	# Ignore grep's exit code since no match returns 1.
-	echo 'linting...' ; golint ./...
+	@echo "Running linters..."
+	@golangci-lint run ./... && echo "Done."
 
-.PHONY: vet
-vet:
-	go vet ./...
+.PHONY: fix-lint
+fix-lint:
+	gofmt -w -s ./
+	goimports -w  ./
 
 .PHONY: all
-all: vet lint test bench
+all: lint test bench
+
+.PHONY: install-tools
+install-tools:
+	$(MAKE) -C ./tools install
 
 .PHONY: example

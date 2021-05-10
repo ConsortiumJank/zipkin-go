@@ -114,9 +114,9 @@ func protoEndpointToModelEndpoint(zpe *Endpoint) *zipkinmodel.Endpoint {
 	}
 }
 
-func protoSpanIDToModelSpanID(spanId []byte) (zid *zipkinmodel.ID, blank bool, err error) {
+func protoSpanIDToModelSpanID(spanId []byte) (*zipkinmodel.ID, bool, error) {
 	if len(spanId) == 0 {
-		return nil, true, nil
+		return nil, false, nil
 	}
 	if len(spanId) != 8 {
 		return nil, true, fmt.Errorf("has length %d yet wanted length 8", len(spanId))
@@ -124,8 +124,8 @@ func protoSpanIDToModelSpanID(spanId []byte) (zid *zipkinmodel.ID, blank bool, e
 
 	// Converting [8]byte --> uint64
 	u64 := binary.BigEndian.Uint64(spanId)
-	zid_ := zipkinmodel.ID(u64)
-	return &zid_, false, nil
+	zid := zipkinmodel.ID(u64)
+	return &zid, false, nil
 }
 
 func protoAnnotationsToModelAnnotations(zpa []*Annotation) (zma []zipkinmodel.Annotation) {

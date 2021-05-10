@@ -57,7 +57,7 @@ var _ = ginkgo.BeforeSuite(func() {
 	serverReporter = recorder.NewReporter()
 	ep, _ := zipkin.NewEndpoint("grpcServer", "")
 	serverIdGenerator = newSequentialIdGenerator(0x1000000)
-	tracer, err := zipkin.NewTracer(
+	tracer, _ := zipkin.NewTracer(
 		serverReporter, zipkin.WithLocalEndpoint(ep), zipkin.WithIDGenerator(serverIdGenerator), zipkin.WithSharedSpans(false))
 
 	lis, err := net.Listen("tcp", ":0")
@@ -73,7 +73,7 @@ var _ = ginkgo.BeforeSuite(func() {
 	customLis, err := net.Listen("tcp", ":0")
 	gomega.Expect(customLis, err).ToNot(gomega.BeNil(), "failed to listen to tcp port")
 
-	tracer, err = zipkin.NewTracer(
+	tracer, _ = zipkin.NewTracer(
 		serverReporter, zipkin.WithLocalEndpoint(ep), zipkin.WithIDGenerator(serverIdGenerator), zipkin.WithSharedSpans(true))
 	customServer = grpc.NewServer(grpc.StatsHandler(zipkingrpc.NewServerHandler(
 		tracer,
@@ -121,7 +121,7 @@ func (g *sequentialIdGenerator) reset() {
 	g.nextSpanId = g.start
 }
 
-type TestHelloService struct{
+type TestHelloService struct {
 	service.UnimplementedHelloServiceServer
 }
 

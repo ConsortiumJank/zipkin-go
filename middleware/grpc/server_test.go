@@ -78,7 +78,7 @@ var _ = ginkgo.Describe("gRPC Server", func() {
 
 		ginkgo.It("propagates parent", func() {
 			// Manually create a client context
-			tracer, err := zipkin.NewTracer(
+			tracer, _ := zipkin.NewTracer(
 				reporter.NewNoopReporter(),
 				zipkin.WithIDGenerator(newSequentialIdGenerator(1)))
 			testSpan := tracer.StartSpan("test")
@@ -156,7 +156,7 @@ var _ = ginkgo.Describe("gRPC Server", func() {
 
 		ginkgo.It("joins with caller", func() {
 			// Manually create a client context
-			tracer, err := zipkin.NewTracer(
+			tracer, _ := zipkin.NewTracer(
 				reporter.NewNoopReporter(),
 				zipkin.WithIDGenerator(newSequentialIdGenerator(1)))
 			testSpan := tracer.StartSpan("test")

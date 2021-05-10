@@ -374,7 +374,7 @@ func TestHTTPInjectWithSingleOnlyHeaders(t *testing.T) {
 	sampled := true
 	sc := model.SpanContext{
 		TraceID: model.TraceID{Low: 1},
-		ID:      model.ID(2),
+		ID:      model.ID(3),
 		Debug:   true,
 		Sampled: &sampled,
 	}
@@ -385,7 +385,8 @@ func TestHTTPInjectWithSingleOnlyHeaders(t *testing.T) {
 		t.Errorf("TraceID want empty, have %s", have)
 	}
 
-	if want, have := "0000000000000001-0000000000000002-d", r.Header.Get(b3.Context); want != have {
+	if want, have := "0000000000000001-0000000000000003-d",
+		r.Header.Get(b3.Context); want != have {
 		t.Errorf("Context want %s, have %s", want, have)
 	}
 }
@@ -395,7 +396,7 @@ func TestHTTPInjectWithBothSingleAndMultipleHeaders(t *testing.T) {
 	sampled := true
 	sc := model.SpanContext{
 		TraceID: model.TraceID{Low: 1},
-		ID:      model.ID(2),
+		ID:      model.ID(4),
 		Debug:   true,
 		Sampled: &sampled,
 	}
@@ -406,7 +407,7 @@ func TestHTTPInjectWithBothSingleAndMultipleHeaders(t *testing.T) {
 		t.Errorf("Trace ID want %s, have %s", want, have)
 	}
 
-	if want, have := "0000000000000001-0000000000000002-d", r.Header.Get(b3.Context); want != have {
+	if want, have := "0000000000000001-0000000000000004-d", r.Header.Get(b3.Context); want != have {
 		t.Errorf("Context want %s, have %s", want, have)
 	}
 }

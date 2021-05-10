@@ -11,7 +11,6 @@ linters:
     - golint
     - govet
     - ineffassign
-    - interfacer
     - lll
     - misspell
     - nakedret
@@ -21,10 +20,10 @@ linters:
 
 linters-settings:
   dupl:
-    threshold: 400 
-  lll:   
+    threshold: 400
+  lll:
     line-length: 170
   gocyclo:
-    min-complexity: 15
+    min-complexity: 20
   golint:
     min-confidence: 0.85
